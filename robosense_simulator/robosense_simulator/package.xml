@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>robosense_simulator</name>
+  <version>1.0.0</version>
+  <description>
+    Metapackage allowing easy installation of Robosense simulation components.
+  </description>
+
+  <license>BSD</license>
+  <author>Thomas SIMON</author>
+  <maintainer email="thomas.simon@ensta-paris.fr">Thomas SIMON</maintainer>
+  <url type="website">http://wiki.ros.org/robosense_simulator</url>
+  <!--TODO url type="repository">>
+  <url type="bugtracker">-->
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <exec_depend>robosense_description</exec_depend>
+  <exec_depend>robosense_gazebo_plugins</exec_depend>
+
+  <export>
+    <metapackage/>
+  </export>
+
+</package>

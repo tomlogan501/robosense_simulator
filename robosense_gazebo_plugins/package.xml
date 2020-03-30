@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>robosense_gazebo_plugins</name>
+  <version>1.0.0</version>
+  <description>
+    Gazebo plugin to provide simulated data from Robosense laser scanners.
+  </description>
+
+  <license>BSD</license>
+  <author>Thomas SIMON</author>
+  <maintainer email="thomas.simon@ensta-paris.fr">Thomas SIMON</maintainer>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>roscpp</depend>
+  <depend>sensor_msgs</depend>
+  <depend>tf</depend>
+  <depend>gazebo_ros</depend>
+
+  <export>
+  </export>
+
+</package>
