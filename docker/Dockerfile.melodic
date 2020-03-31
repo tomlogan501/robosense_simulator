@@ -1,0 +1,15 @@
+FROM ros:melodic-perception
+
+#Workspace to use
+RUN mkdir -p root/catkin_ws/src/
+RUN /bin/bash -c 'cd /root/catkin_ws'
+
+#Copy code
+COPY . root/catkin_ws/src/robosense_simulator
+
+RUN apt-get update && apt-get upgrade -y && apt-get install -y ros-melodic-gazebo-ros
+
+#Launch the compile
+RUN /bin/bash -c ' source /opt/ros/melodic/setup.bash \
+	&& cd root/catkin_ws\
+	&& catkin_make'
