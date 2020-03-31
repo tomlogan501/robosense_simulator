@@ -8,13 +8,13 @@ on:
 
 jobs:
 
-  kinectic:
+  kinetic:
 
     runs-on: ubuntu-16.04
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build the Docker image kinectic
+    - name: Build the Docker image kinetic
       run: docker build . --file docker/Dockerfile.kinetic --tag my-image-name:$(date +%s)
     
   melodic:
