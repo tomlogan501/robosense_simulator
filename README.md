@@ -1,6 +1,8 @@
 # Robosense Simulator
 URDF description and Gazebo plugins to simulate Robosense laser scanners. Cloned and adapted from [velodyne_simulator](https://bitbucket.org/DataspeedInc/velodyne_simulator)
 
+![Docker Image CI kinetic/melodic](https://github.com/tomlogan501/robosense_simulator/workflows/Docker%20Image%20CI%20kinetic/melodic/badge.svg)
+
 ![rviz screenshot](img/rviz.png)
 
 # Features
