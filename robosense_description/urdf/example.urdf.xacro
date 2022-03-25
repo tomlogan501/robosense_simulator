@@ -33,8 +33,8 @@
   </link>
 
   <xacro:include filename="$(find robosense_description)/urdf/RS-16.urdf.xacro"/>
-  <RS-16 parent="base_link" name="robosense" topic="/rs_points" hz="20" samples="900" gpu="${gpu}">
+  <xacro:RS-16 parent="base_link" name="robosense" topic="/rs_points" hz="20" samples="900" gpu="${gpu}">
     <origin xyz="0 0 0.4" rpy="0 0 0" />
-  </RS-16>
+  </xacro:RS-16>
 
 </robot>
