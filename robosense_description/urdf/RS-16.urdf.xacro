@@ -4,7 +4,7 @@
   <xacro:macro name="RS-16" params="*origin parent:=base_link name:=robosense topic:=/robosense_points hz:=20 lasers:=16 samples:=900 collision_range:=0.4 min_range:=0.4 max_range:=150.0 noise:=0.008 min_angle:=-${M_PI} max_angle:=${M_PI} gpu:=false">
 
     <joint name="${name}_base_mount_joint" type="fixed">
-      <xacro:insert_block name="origin" /> 
+      <xacro:insert_block name="origin" />
       <parent link="${parent}"/>
       <child link="${name}_base_link"/>
     </joint>
