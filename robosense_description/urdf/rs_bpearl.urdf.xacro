@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find robosense_description)/urdf/inertias.xacro" />
+    <xacro:property name="M_PI" value="3.1415926535897931" />
+
+    <xacro:macro name="rs_bpearl" params="name parent_link *origin gpu:=false">
+        <link name="${name}">
+            <xacro:cylinder_inertial_collision_with_origin radius="0.04" length="0.08" mass="5" >
+                <origin rpy="0 0 0" xyz="0 0 0.04"/>
+            </xacro:cylinder_inertial_collision_with_origin>
+            <visual>
+                <origin xyz="0 0 0" rpy="-${pi/2} 0 0" />
+                <geometry>
+                    <mesh filename="package://robosense_description/meshes/RS_Pearl_Lens.stl" />
+                </geometry>
+                <material name="">
+                    <color rgba="0.2 0.2 0.7 0.9" />
+                </material>
+            </visual>
+            <visual>
+                <origin xyz="0 0 0" rpy="-${pi/2} 0 0" />
+                <geometry>
+                    <mesh filename="package://robosense_description/meshes/RS_Pearl_Base.stl" />
+                </geometry>
+                <material name="">
+                    <color rgba="0.8 0.8 0.8 1" />
+                </material>
+            </visual>
+        </link>
+        <joint name="${name}_joint" type="fixed">
+            <parent link="${parent_link}"/>
+            <child link="${name}"/>
+            <xacro:insert_block name="origin" />
+            <axis xyz="0 0 0"/>
+        </joint>
+
+        <xacro:include filename="$(find robosense_description)/urdf/robosense_lidar_sensor.gazebo"/>
+        <xacro:robosense_lidar_sensor
+            name="${name}"
+            topic="${name}/points"
+            rate="10"
+            lasers="32"
+            samples="1800"
+            collision_range="0.4"
+            min_range="0.1"
+            max_range="30"
+            noise="0.03"
+            min_angle="-${M_PI}"
+            max_angle="${M_PI}"
+            min_angle_vertical="0"
+            max_angle_vertical="${M_PI/2}"
+            gpu="${gpu}" />
+    </xacro:macro>
+</robot>

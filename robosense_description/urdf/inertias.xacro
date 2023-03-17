@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- see https://secure.wikimedia.org/wikipedia/en/wiki/List_of_moment_of_inertia_tensors -->
+
+  <xacro:macro name="cylinder_inertial_with_origin" params="radius length mass *origin">
+    <inertial>
+      <mass value="${mass}" />
+      <xacro:insert_block name="origin" />
+      <inertia ixx="${0.0833333 * mass * (3 * radius * radius + length * length)}" ixy="0.0" ixz="0.0"
+        iyy="${0.0833333 * mass * (3 * radius * radius + length * length)}" iyz="0.0"
+        izz="${0.5 * mass * radius * radius}" />
+    </inertial>
+  </xacro:macro>
+
+  <xacro:macro name="cylinder_inertial_collision_with_origin" params="radius length mass *origin">
+    <xacro:cylinder_inertial_with_origin radius="${radius}" length="${length}" mass="${mass}" >
+      <xacro:insert_block name="origin" />
+    </xacro:cylinder_inertial_with_origin>
+    <collision>
+      <xacro:insert_block name="origin" />
+      <geometry>
+        <cylinder radius="${radius}" length="${length}" />
+      </geometry>
+    </collision>
+  </xacro:macro>
+
+</robot>
