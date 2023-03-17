@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:macro name="robosense_lidar_sensor" params="name topic rate lasers samples collision_range min_range max_range noise min_angle max_angle gpu">
+  <xacro:macro name="robosense_lidar_sensor" params="name topic rate lasers samples collision_range min_range max_range noise min_angle max_angle min_angle_vertical max_angle_vertical gpu">
     <!-- Gazebo requires the robosense_gazebo_plugins package -->
     <gazebo reference="${name}">
       <sensor type="${'gpu_' if gpu else ''}ray" name="${name}">
@@ -19,8 +19,8 @@
             <vertical>
               <samples>${lasers}</samples>
               <resolution>1</resolution>
-              <min_angle>-${15.0*M_PI/180.0}</min_angle>
-              <max_angle> ${15.0*M_PI/180.0}</max_angle>
+              <min_angle>${min_angle_vertical}</min_angle>
+              <max_angle>${max_angle_vertical}</max_angle>
             </vertical>
           </scan>
           <range>
