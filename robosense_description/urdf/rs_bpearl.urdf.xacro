@@ -3,7 +3,7 @@
     <xacro:include filename="$(find robosense_description)/urdf/inertias.xacro" />
     <xacro:property name="M_PI" value="3.1415926535897931" />
 
-    <xacro:macro name="rs_bpearl" params="name parent_link *origin gpu:=false">
+    <xacro:macro name="rs_bpearl" params="name parent_link *origin gpu:=false rate:=10 topic:=''">
         <link name="${name}">
             <xacro:cylinder_inertial_collision_with_origin radius="0.04" length="0.08" mass="5" >
                 <origin rpy="0 0 0" xyz="0 0 0.04"/>
@@ -37,8 +37,8 @@
         <xacro:include filename="$(find robosense_description)/urdf/robosense_lidar_sensor.gazebo"/>
         <xacro:robosense_lidar_sensor
             name="${name}"
-            topic="${name}/points"
-            rate="10"
+            topic="${topic if topic else name+'/points'}"
+            rate="${rate}"
             lasers="32"
             samples="1800"
             collision_range="0.4"
