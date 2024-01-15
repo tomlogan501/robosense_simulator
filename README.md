@@ -3,6 +3,8 @@ URDF description and Gazebo plugins to simulate Robosense laser scanners. Cloned
 
 This version was authored by Jerome Justin for ROS2 humble version.
 
+NOTE - This version has no GPU capabilities.
+
 ![Docker Image CI kinetic/melodic](https://github.com/tomlogan501/robosense_simulator/workflows/Docker%20Image%20CI%20kinetic/melodic/badge.svg)
 
 ![rviz screenshot](img/rviz.png)
