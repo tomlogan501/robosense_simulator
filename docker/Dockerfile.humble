@@ -1,0 +1,15 @@
+FROM ros:humble-perception
+
+#Workspace to use
+RUN mkdir -p root/ros2_ws/src/
+RUN /bin/bash -c 'cd /root/ros2_ws'
+
+#Copy code
+COPY . root/ros2_ws/src/robosense_simulator
+
+RUN apt-get update && apt-get upgrade -y && apt-get install -y ros-humble-gazebo-ros
+
+#Launch the compile
+RUN /bin/bash -c ' source /opt/ros/humble/setup.bash \
+	&& cd root/ros2_ws\
+	&& colcon build'
