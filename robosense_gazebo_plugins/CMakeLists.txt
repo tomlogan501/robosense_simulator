@@ -1,50 +1,51 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.8)
 project(robosense_gazebo_plugins)
 
-find_package(catkin REQUIRED COMPONENTS
-  roscpp
-  sensor_msgs
-  tf
+# Default to C++17
+if(NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD 17)
+endif()
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic")
+endif()
+
+find_package(ament_cmake REQUIRED)
+find_package(gazebo_dev REQUIRED)
+find_package(gazebo_ros REQUIRED)
+find_package(gazebo_msgs REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(sensor_msgs REQUIRED)
+
+add_library(gazebo_ros_robosense_laser SHARED
+  src/GazeboRosRoboSenseLaser.cpp
+)
+ament_target_dependencies(gazebo_ros_robosense_laser
+  gazebo_dev
   gazebo_ros
+  gazebo_msgs
+  rclcpp
+  sensor_msgs
 )
-find_package(gazebo REQUIRED)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")
-
-catkin_package(
-  INCLUDE_DIRS include ${GAZEBO_INCLUDE_DIRS}
-  LIBRARIES gazebo_ros_robosense_laser gazebo_ros_robosense_gpu_laser
-  CATKIN_DEPENDS roscpp sensor_msgs gazebo_ros
-)
-
-include_directories(
-  include
-  ${catkin_INCLUDE_DIRS}
-  ${GAZEBO_INCLUDE_DIRS}
+target_include_directories(gazebo_ros_robosense_laser PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>
 )
 
-link_directories(
-  ${GAZEBO_LIBRARY_DIRS}
+install(TARGETS
+  gazebo_ros_robosense_laser
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION lib/${PROJECT_NAME}
 )
-
-add_library(gazebo_ros_robosense_laser src/GazeboRosRoboSenseLaser.cpp)
-target_link_libraries(gazebo_ros_robosense_laser
-  ${catkin_LIBRARIES}
-  ${GAZEBO_LIBRARIES}
-  RayPlugin
-)
-
-add_library(gazebo_ros_robosense_gpu_laser src/GazeboRosRoboSenseLaser.cpp)
-target_link_libraries(gazebo_ros_robosense_gpu_laser
-  ${catkin_LIBRARIES}
-  ${GAZEBO_LIBRARIES}
-  GpuRayPlugin
-)
-target_compile_definitions(gazebo_ros_robosense_gpu_laser PRIVATE GAZEBO_GPU_RAY=1)
-
-install(TARGETS gazebo_ros_robosense_laser gazebo_ros_robosense_gpu_laser
-        LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-)
-
 install(DIRECTORY include/${PROJECT_NAME}/
-        DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+  DESTINATION include/${PROJECT_NAME}
 )
+
+ament_export_include_directories(include)
+ament_export_libraries(gazebo_ros_robosense_laser)
+ament_export_dependencies(gazebo_dev)
+ament_export_dependencies(gazebo_ros)
+ament_export_dependencies(gazebo_msgs)
+ament_export_dependencies(rclcpp)
+ament_export_dependencies(sensor_msgs)
+ament_package()

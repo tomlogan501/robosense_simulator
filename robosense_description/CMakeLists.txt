@@ -1,10 +1,21 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.8)
 project(robosense_description)
 
-find_package(catkin REQUIRED)
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
 
-catkin_package()
+find_package(ament_cmake REQUIRED)
+find_package(urdf REQUIRED)
 
-install(DIRECTORY launch meshes rviz urdf world
-        DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+#this must be added so launch files can be used from CLI
+install(DIRECTORY
+  urdf
+  meshes
+  launch
+  rviz
+  world
+  DESTINATION share/${PROJECT_NAME}
 )
+
+ament_package()
